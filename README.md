@@ -1,4 +1,4 @@
-## Eego4d Audio Visual Diarization Benchmark: Active Speaker Detection 
+## Ego4d Audio-visual Diarization Benchmark: Active Speaker Detection 
 This repository contains the code adapted from TalkNet, an active speaker detection model to detect 'whether the face in the screen is speaking or not?'. For more details, please refer to [[Paper](https://arxiv.org/pdf/2107.06592.pdf)]    [[Video_English](https://youtu.be/C6bpAgI9zxE)]    [[Video_Chinese](https://www.bilibili.com/video/bv1Yw411d7HG)].
 
 
