@@ -1,4 +1,4 @@
-## Eego4d Audio Visual Diarization Benchmark: Actvie Speaker Detection 
+## Eego4d Audio Visual Diarization Benchmark: Active Speaker Detection 
 This repository contains the code adapted from TalkNet, an active speaker detection model to detect 'whether the face in the screen is speaking or not?'. For more details, please refer to [[Paper](https://arxiv.org/pdf/2107.06592.pdf)]    [[Video_English](https://youtu.be/C6bpAgI9zxE)]    [[Video_Chinese](https://www.bilibili.com/video/bv1Yw411d7HG)].
 
 
@@ -39,12 +39,13 @@ data/
   * test.list
   * train.list
   * val.list
+  * full.list
 * videos/
   * 00407bd8-37b4-421b-9c41-58bb8f141716.mp4
   * 007beb60-cbab-4c9e-ace4-f5f1ba73fccf.mp4
   * ...
 
-Run the following script to preprocess the videos and annotations:
+Run the following scripts to preprocess the videos and annotations:
 
 ```
 bash scripts/extract_frame.sh
@@ -67,7 +68,7 @@ The results will be saved in `exps/exp`:
 
 ### Pretrained model
 
-The model pretrained on AVA will automaticly be downloaded into `data/pretrain_AVA.model`.
+The model pretrained on AVA will automatically be downloaded into `data/pretrain_AVA.model`.
 
 Our [model](https://drive.google.com/drive/folders/1lNQxdlCtFVYQoKBYA0EoPoiw_Mtc4JTO?usp=sharing) trained on Ego4d performs `ACC:79.27%` on test set. 
 
