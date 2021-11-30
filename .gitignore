@@ -6,12 +6,17 @@
 *.txt
 *.pcm
 *.json
-data/
 tests/
 exps/
 demo/*
 .vscode/*
 deprecated/*
+data/csv
+data/ego4d
+data/infer
+data/track_results
+data/video_imgs
+data/wave
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
