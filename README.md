@@ -25,16 +25,13 @@ pip install -r requirement.txt
 
 ### Data preparation
 
-Download video clips and annotations (csv) for audio-visual diarization benchmark.
+Download video clips and annotations (csv) for audio-visual diarization benchmark following the Ego4D download [instructions](https://github.com/facebookresearch/Ego4d/blob/main/ego4d/cli/README.md).
 
-```
-python *** data/videos data/csv
-```
 Note: the default folder to save videos and annotations is ```./data```, please create symbolic links in ```./data``` if you save them in another directory. The structure should be like this:
 
 data/
-* csv/
-  * AV_step123_v1_batch1_export.csv
+* json/
+  * av.json
 * split/
   * test.list
   * train.list
