@@ -66,12 +66,13 @@ def load_audio(data, dataPath, numFrames, audioAug, audioSet = None):
 
 
 def load_visual(data, dataPath, numFrames, visualAug): 
-    trackid = ':'.join(data[0].split(':')[:-1])
+    trackid = data[0]
     videoName = data[0][:36]
     faceFolderPath = os.path.join(dataPath, videoName)
-    with open(f'ego4d/bbox/{trackid}.json', 'r') as f:
+    with open(f'data/ego4d/bbox/{trackid}.json', 'r') as f:
         bbox = json.load(f)
-    track = [bbox[str(i)] for i in range(int(data[-1]), int(data[-1])+int(data[1])) if str(i) in bbox]
+        bbox = { b["frame"]:b for b in bbox }
+    track = [bbox[i] for i in range(int(data[-1]), int(data[-1])+int(data[1])) if i in bbox]
     frames = check(track)
     
     faces = []
@@ -86,7 +87,7 @@ def load_visual(data, dataPath, numFrames, visualAug):
     
     dets = {'x':[], 'y':[], 's':[]}
     for frame in frames:
-        frameid = frame['frameNumber']
+        frameid = frame['frame']
         x1 = frame['x']
         y1 = frame['y']
         x2 = frame['x'] + frame['width']
@@ -102,7 +103,7 @@ def load_visual(data, dataPath, numFrames, visualAug):
     dets['y'][1:] = dets['y'][:-1]*0.8 + dets['y'][1:]*0.2
 
     for i, frame in enumerate(frames): 
-        frameid = frame['frameNumber'] = frame['frameNumber']
+        frameid = frame['frame'] = frame['frame']
         img = cv2.imread(f'{faceFolderPath}/img_{int(frameid):05d}.jpg')
         cs  = 0.4
         bs  = dets['s'][i]
@@ -136,10 +137,9 @@ def check(track):
         w = frame['width']
         h = frame['height']
         if (w <= 0 or h <= 0 or 
-            frame['frameNumber']==0 or
-            len(frame['Person ID'])==0):
+            frame['frame']==0):
             continue
-        framenum.append(frame['frameNumber'])
+        framenum.append(frame['frame'])
         x = max(x, 0)
         y = max(y, 0)
         bbox = [x, y, x + w, y + h]
@@ -169,7 +169,7 @@ def check(track):
     template = track[0]
     for i, (frame, bbox) in enumerate(zip(frame_i, bboxes_i)):
         record = template.copy()
-        record['frameNumber'] = frame
+        record['frame'] = frame
         record['x'] = bbox[0]
         record['y'] = bbox[1]
         record['width'] = bbox[2] - bbox[0]
@@ -296,7 +296,7 @@ def load_visual_predict(data, dataPath, numFrames, visualAug):
         augType = 'orig'
     dets = {'x':[], 'y':[], 's':[]}
     for frame in frames:
-        frameid = frame['frameNumber']
+        frameid = frame['frame']
         x1 = frame['x1']
         y1 = frame['y1']
         x2 = frame['x2']
@@ -312,7 +312,7 @@ def load_visual_predict(data, dataPath, numFrames, visualAug):
     dets['y'][1:] = dets['y'][:-1]*0.8 + dets['y'][1:]*0.2
 
     for i, frame in enumerate(frames): 
-        frameid = frame['frameNumber'] = frame['frameNumber']
+        frameid = frame['frame'] = frame['frame']
         img = cv2.imread(f'{faceFolderPath}/img_{int(frameid):05d}.jpg')
         cs  = 0.4
         bs  = dets['s'][i]

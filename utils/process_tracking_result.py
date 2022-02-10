@@ -31,9 +31,9 @@ def generate_from_pretained_tracker(split='test'):
         with open(tracklet, 'r') as f:
             res = f.readlines()
         for record in res:
-            frameNumber, pid, x1, y1, x2, y2 = record.split()
+            frame, pid, x1, y1, x2, y2 = record.split()
             global_tracks[pid].append({
-                'frameNumber': int(frameNumber), 
+                'frame': int(frame), 
                 'x1': int(x1), 
                 'y1': int(y1), 
                 'x2': int(x2), 
@@ -47,12 +47,12 @@ def generate_from_pretained_tracker(split='test'):
             count = -1
             last_frame = -2
             track_length = 0
-            frames.sort(key=lambda x:x['frameNumber'])
+            frames.sort(key=lambda x:x['frame'])
             for f in frames:
-                if (f['frameNumber'] > last_frame + 1) or (track_length > 300):
+                if (f['frame'] > last_frame + 1) or (track_length > 300):
                     count += 1
                     track_length = 0
-                last_frame = f['frameNumber']
+                last_frame = f['frame']
                 video = f['video']
                 trackid = f'{video}:{pid}:{count}'
                 f.pop('video')
@@ -63,8 +63,8 @@ def generate_from_pretained_tracker(split='test'):
             with open(f'data/infer/bbox/{track_id}.json', 'w+') as f:
                 json.dump(frames, f)
             record = []
-            # [trackid (video+trackid),  length of tracklets,  fps,  labels,  frameNumber]
-            record.append([track_id, len(frames), 30.0, [0], frames[0]['frameNumber']])
+            # [trackid (video+trackid),  length of tracklets,  fps,  labels,  frame]
+            record.append([track_id, len(frames), 30.0, [0], frames[0]['frame']])
             asd_records.extend(record)
 
     asd_records = pd.DataFrame(asd_records)
