@@ -21,7 +21,7 @@ def main():
     parser.add_argument('--savePath',     type=str, default="exps/exp")
     # Data selection
     parser.add_argument('--evalDataType', type=str, default="test", help='Choose the dataset for evaluation, val or test')
-    parser.add_argument('--checkpint',  type=str, default="data/pretrain_AVA.model", help='Model checkpoint')
+    parser.add_argument('--checkpoint',  type=str, default="data/pretrain_AVA.model", help='Model checkpoint')
     args = parser.parse_args()
     # Data loader
     args = init_args(args)
@@ -34,7 +34,7 @@ def main():
     
     download_pretrain_model_AVA()
     s = talkNet(**vars(args))
-    pretrained_model = args.checkpint
+    pretrained_model = args.checkpoint
     s.loadParameters(pretrained_model)
     print("Model %s loaded from previous state!"%(pretrained_model))
     s.predict_network(loader = valLoader, **vars(args))

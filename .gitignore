@@ -125,3 +125,5 @@ ego4d/*
 # mypy
 .mypy_cache/
 data_backup/*
+*.zip
+data/*results*/

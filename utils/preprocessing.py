@@ -7,7 +7,7 @@ import pandas as pd
 def generate(split='train'):
     with open(f'data/json/av_{split}.json', 'r') as f:
         ori_annot = json.load(f)
-    annotation = { c_annot['source_clip_uid']: c_annot for v_annot in ori_annot['videos'] for c_annot in v_annot['clips'] }
+    annotation = { c_annot['clip_uid']: c_annot for v_annot in ori_annot['videos'] for c_annot in v_annot['clips'] }
 
     with open(f'data/split/{split}.list', 'r') as f:
         videos = [line.strip() for line in f.readlines()]
@@ -32,7 +32,7 @@ def generate(split='train'):
                 tracks[bbox['track_id']] = { 'person': person['person_id'], 'frames': bbox['track'] }
                     
         for track in tracks:
-            label = []
+            label = []s
             bbox = {}
             record = []
             frames = tracks[track]['frames']

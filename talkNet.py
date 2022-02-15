@@ -93,11 +93,11 @@ class talkNet(nn.Module):
                         scores.extend(score)
                 allScore.append(scores)
             allScore = numpy.round((numpy.mean(numpy.array(allScore), axis = 0)), 1).astype(float)
-            with open(f'data/ego4d/bbox/{trackid[0]}.json', 'r') as f:
+            with open(f'{kwargs["dataPath"]}/bbox/{trackid[0]}.json', 'r') as f:
                 bbox = json.load(f)
             for i, frame in enumerate(bbox):
                 frame['score'] = str(allScore[i])
-                frame['label'] = int(allScore[i].item()>0)
+                frame['label'] = int(allScore[i].item()>-3.0)
             with open(f'output/results/{trackid[0]}.json', 'w+') as f:
                 json.dump(bbox, f)
 
@@ -108,7 +108,7 @@ class talkNet(nn.Module):
         selfState = self.state_dict()
         loadedState = torch.load(path)
         for name, param in loadedState.items():
-            origName = name;
+            origName = name
             if name not in selfState:
                 name = name.replace("module.", "")
                 if name not in selfState:

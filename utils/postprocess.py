@@ -23,7 +23,7 @@ def generate_results(split='val'):
             with open(asd, 'r') as f:
                 lines = json.load(f)
                 for line in lines:
-                    identifier = '{}:{}'.format(line['frameNumber'], line['pid'])
+                    identifier = '{}:{}'.format(line['frame'], line['pid'])
                     pidre[identifier] = line
         with open(t, 'r') as f:
             lines = f.readlines()
